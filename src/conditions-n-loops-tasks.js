@@ -67,8 +67,12 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  return (
+    queen.x === king.x ||
+    queen.y === king.y ||
+    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)
+  );
 }
 
 /**
@@ -89,8 +93,13 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a && b && c) {
+    return (
+      (a === b && a + b > c) || (b === c && b + c > a) || (a === c && a + c > b)
+    );
+  }
+  return false;
 }
 
 /**
@@ -107,9 +116,32 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let res = '';
+  const dec = Math.floor(num / 10);
+  for (let i = 0; i < dec; i += 1) {
+    res += 'X';
+  }
+  let units = num - dec * 10;
+  if (units === 4) {
+    res += 'IV';
+    return res;
+  }
+  if (units === 9) {
+    res += 'IX';
+    return res;
+  }
+  if (units >= 5) {
+    res += 'V';
+    units -= 5;
+  }
+  for (let i = 0; i < units; i += 1) {
+    res += 'I';
+  }
+  return res;
 }
+
+convertToRomanNumerals(10);
 
 /**
  * Converts a number to a string, replacing digits with words.
