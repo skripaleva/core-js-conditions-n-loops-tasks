@@ -268,8 +268,15 @@ function getIndexOf(str, letter) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let res = false;
+  const str = `${num}`;
+  for (let i = 0; i < str.length; i += 1) {
+    if (+str[i] === digit) {
+      res = true;
+    }
+  }
+  return res;
 }
 
 /**
@@ -285,8 +292,23 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let res = -1;
+  for (let i = 0; i < arr.length; i += 1) {
+    let left = 0;
+    let right = 0;
+    for (let j = 0; j < arr.length; j += 1) {
+      if (j < i) {
+        left += arr[j];
+      } else if (j > i) {
+        right += arr[j];
+      }
+    }
+    if (left === right) {
+      res = i;
+    }
+  }
+  return res;
 }
 
 /**
@@ -310,10 +332,46 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
-}
+function getSpiralMatrix(size) {
+  const res = [];
+  let top = 0;
+  let bottom = size - 1;
+  let left = 0;
+  let right = size - 1;
+  let count = 1;
 
+  for (let i = 0; i < size; i += 1) {
+    res[i] = [];
+  }
+
+  while (top <= bottom && left <= right) {
+    for (let i = left; i <= right; i += 1) {
+      res[top][i] = count;
+      count += 1;
+    }
+    top += 1;
+
+    for (let i = top; i <= bottom; i += 1) {
+      res[i][right] = count;
+      count += 1;
+    }
+    right -= 1;
+
+    for (let i = right; i >= left; i -= 1) {
+      res[bottom][i] = count;
+      count += 1;
+    }
+    bottom -= 1;
+
+    for (let i = bottom; i >= top; i -= 1) {
+      res[i][left] = count;
+      count += 1;
+    }
+    left += 1;
+  }
+  return res;
+}
+getSpiralMatrix(5);
 /**
  * Rotates a matrix by 90 degrees clockwise in place.
  * Take into account that the matrix size can be very large. Consider how you can optimize your solution.
@@ -329,8 +387,22 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const res = matrix;
+  const arr = [];
+  const size = matrix.length;
+
+  for (let i = 0; i < size; i += 1) {
+    arr[i] = [...matrix[i]];
+  }
+
+  for (let i = size - 1; i >= 0; i -= 1) {
+    for (let j = 0; j < size; j += 1) {
+      res[j][size - 1 - i] = arr[i][j];
+    }
+  }
+
+  return res;
 }
 
 /**
